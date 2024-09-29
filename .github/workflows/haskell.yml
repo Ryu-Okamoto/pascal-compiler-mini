@@ -1,34 +1,20 @@
 name: Haskell CI
-
 on: 
   workflow_dispatch:
 permissions:
   contents: read
-
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: haskell-actions/setup@v2
-      with:
-        ghc-version: '9.6.6'
-        cabal-version: '3.10'
-    - name: Cache
-      uses: actions/cache@v3
-      env:
-        cache-name: cache-cabal
-      with:
-        path: ~/.cabal
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/*.cabal') }}-${{ hashFiles('**/cabal.project') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
-    - name: Install dependencies
-      run: |
-        cabal update
-        cabal configure --enable-tests --enable-benchmarks
-        cabal build --only-dependencies
-    - name: Run tests
-      run: cabal test all --test-show-details=direct
+      - uses: actions/checkout@v4
+      - uses: haskell-actions/setup@v2
+        with:
+          ghc-version: '9.6.6'
+          # cabal-version: 'latest'. Omitted, but defaults to 'latest'
+          enable-stack: true
+          stack-version: '3.1.1'
+      - name: Install dependencies
+        run: stack --system-ghc build --no-run-tests
+      - name: Run tests
+        run: stack --system-ghc test
