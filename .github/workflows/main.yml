@@ -1,0 +1,14 @@
+name: test
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: mstksg/setup-stack@v2
+      with:
+        runs-on: ubuntu-latest
+    - name: Setup stack
+      run: stack setup
