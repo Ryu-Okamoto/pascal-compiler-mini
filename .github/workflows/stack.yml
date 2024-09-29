@@ -16,6 +16,6 @@ jobs:
           enable-stack: true
           stack-version: '3.1.1'
       - name: Install dependencies
-        run: stack build --no-run-tests
+        run: stack --system-ghc build --no-run-tests
       - name: Run tests
-        run: stack test --coverage
+        run: stack --system-ghc test --coverage
