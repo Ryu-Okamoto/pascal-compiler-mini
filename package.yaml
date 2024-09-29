@@ -60,6 +60,5 @@ tests:
     - pascal-compiler-mini
     - hspec
     - hspec-contrib
-    - hspec-discover
     - QuickCheck
     - HUnit
