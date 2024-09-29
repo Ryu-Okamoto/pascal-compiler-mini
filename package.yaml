@@ -1,10 +1,10 @@
 name:                pascal-compiler-mini
 version:             0.1.0.0
-github:              "githubuser/pascal-compiler-mini"
-license:             BSD-3-Clause
-author:              "Author name here"
+github:              "Ryu-Okamoto/pascal-compiler-mini"
+license:             MIT
+author:              "Ryu O."
 maintainer:          "example@example.com"
-copyright:           "2024 Author name here"
+copyright:           "2024 Ryu O."
 
 extra-source-files:
 - README.md
