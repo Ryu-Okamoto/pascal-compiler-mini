@@ -3,6 +3,7 @@ module LexerSpec ( spec ) where
 import Test.Hspec ( Spec, SpecWith, describe, it, runIO, shouldBe )
 
 import Token ( tkFile2Tokens )
+import Lexer.LexMonad ( Lex (..) )
 import qualified Lexer.Lexer as Lexer ( run )
 
 spec :: Spec
@@ -44,11 +45,18 @@ spec =
     testCase "synerr06"
     testCase "synerr07"
     testCase "synerr08"
+    testErrorCase "lexerr01" "2"
+    testErrorCase "lexerr02" "3"
+    testErrorCase "lexerr03" "6"
     
 
 testCase :: String -> SpecWith ()
 testCase baseName = do
-  actual <- runIO $ Lexer.run pasFilePath
+  lexResult <- runIO $ Lexer.run pasFilePath
+  let actual =
+        case lexResult of
+          (LexicalError _     ) -> []
+          (Lex          tokens) -> tokens
   expected <- runIO $ tkFile2Tokens tkFilePath
   it ("converts " ++ pasFile ++ " to " ++ tkFile) $ actual `shouldBe` expected
   where
@@ -56,3 +64,15 @@ testCase baseName = do
     tkFilePath = "./test/data/tk/" ++ tkFile 
     pasFile = baseName ++ ".pas"
     tkFile = baseName ++ ".tk"
+
+testErrorCase :: String -> String -> SpecWith()
+testErrorCase baseName expected = do
+  lexResult <- runIO $ Lexer.run pasFilePath
+  let actual =
+        case lexResult of
+          (LexicalError line) -> line
+          (Lex          _   ) -> "NG"
+  it ("fails to convert " ++ pasFile ++ " due to a lexical error") $ actual `shouldBe` expected
+  where
+    pasFilePath = "./test/data/pas/" ++ pasFile
+    pasFile = baseName ++ ".pas"

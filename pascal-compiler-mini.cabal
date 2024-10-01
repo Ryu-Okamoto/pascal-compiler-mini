@@ -29,6 +29,7 @@ library
       Checker.Checker
       Checker.CheckMonad
       Lexer.Lexer
+      Lexer.LexMonad
       Parser.ParseMonad
       Parser.Parser
       Token

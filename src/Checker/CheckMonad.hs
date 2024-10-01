@@ -21,4 +21,3 @@ instance Monad Check where
   (>>=) :: Check a -> (a -> Check b) -> Check b
   (>>=) (Check x) f = f x
   (>>=) (SemanticError line) _ = SemanticError line
-
