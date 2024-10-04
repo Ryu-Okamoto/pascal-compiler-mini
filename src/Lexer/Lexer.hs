@@ -23,7 +23,7 @@ tokenizeForLines (h:t) lineNumber = do
   return $ tokens ++ rest
 
 lineToTokens :: String -> Int -> Lex [Token]
-lineToTokens ""    _          = return []
+lineToTokens ""    _         = return []
 lineToTokens line lineNumber = do
   (firstToken, _, rest) <- extractFirstToken ([], State0, line)
   restTokens <- lineToTokens rest lineNumber
