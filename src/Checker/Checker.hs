@@ -6,4 +6,4 @@ import qualified Parser.Parser as Parser ( run )
 import Checker.CheckMonad ( Check (..) )
 
 run :: AST -> Check AST
-run _ = SemanticError ""
+run _ = SemanticError 0

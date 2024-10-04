@@ -2,7 +2,7 @@ module ParserSpec ( spec ) where
 
 import Test.Hspec ( Spec, SpecWith, describe, it, runIO, shouldBe )
 
-import Token ( tkFile2Tokens )
+import Token ( tkFileToTokens )
 import Parser.ParseMonad ( Parse (..) )
 import qualified Parser.Parser as Parser ( run )
 
@@ -49,10 +49,10 @@ spec =
 
 testCase :: String -> String -> SpecWith ()
 testCase baseName expected = do
-  tokens <- runIO $ tkFile2Tokens tkFilePath
+  tokens <- runIO $ tkFileToTokens tkFilePath
   let actual =
         case parseResult of
-          (SyntaxError line) -> "SyntaxError " ++ line 
+          (SyntaxError line) -> "SyntaxError " ++ show line 
           (Parse       _   ) -> "OK"
         where 
           parseResult = Parser.run tokens

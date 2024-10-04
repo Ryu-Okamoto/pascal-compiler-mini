@@ -2,7 +2,7 @@
 
 module Checker.CheckMonad ( Check (..) ) where
 
-data Check a = Check a | SemanticError String
+data Check a = Check a | SemanticError Int
 
 instance Functor Check where
   fmap :: (a -> b) -> Check a -> Check b

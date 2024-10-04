@@ -2,7 +2,7 @@
 
 module Parser.ParseMonad ( Parse (..) ) where
 
-data Parse a = Parse a | SyntaxError String
+data Parse a = Parse a | SyntaxError Int
 
 instance Functor Parse where
   fmap :: (a -> b) -> Parse a -> Parse b
