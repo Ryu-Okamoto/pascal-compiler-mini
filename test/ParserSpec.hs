@@ -45,18 +45,17 @@ spec =
     testCase "synerr06" "SyntaxError 13"
     testCase "synerr07" "SyntaxError 30"
     testCase "synerr08" "SyntaxError 31"
-    
 
 testCase :: String -> String -> SpecWith ()
 testCase baseName expected = do
-  tokens <- runIO $ tkFileToTokens tkFilePath
+  tokens <- runIO $ tkFileToTokens tkFilePath 
   let actual =
         case parseResult of
-          (SyntaxError line) -> "SyntaxError " ++ show line 
+          (SyntaxError line) -> "SyntaxError " ++ show line
           (Parse       _   ) -> "OK"
-        where 
+        where
           parseResult = Parser.run tokens
-  it ("parses " ++ tkFile ++ " and construct the AST, detecting a syntax error") $ actual `shouldBe` expected
+  it ("identifies whether a syntax error exists in " ++ tkFile) $ actual `shouldBe` expected
   where
     tkFilePath = "./test/data/tk/" ++ tkFile 
     tkFile = baseName ++ ".tk"

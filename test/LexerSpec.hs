@@ -45,11 +45,11 @@ spec =
     testCase "synerr06"
     testCase "synerr07"
     testCase "synerr08"
-    testErrorCase "lexerr01" "2"
-    testErrorCase "lexerr02" "3"
-    testErrorCase "lexerr03" "6"
+    testErrorCase "lexerr01" "LexicalError 2" 
+    testErrorCase "lexerr02" "LexicalError 3" 
+    testErrorCase "lexerr03" "LexicalError 6"
+    testErrorCase "lexerr04" "LexicalError 8"
     
-
 testCase :: String -> SpecWith ()
 testCase baseName = do
   lexResult <- runIO $ Lexer.run pasFilePath
@@ -70,9 +70,9 @@ testErrorCase baseName expected = do
   lexResult <- runIO $ Lexer.run pasFilePath
   let actual =
         case lexResult of
-          (LexicalError line) -> show line
-          (Lex          _   ) -> "NG"
-  it ("fails to convert " ++ pasFile ++ " due to a lexical error") $ actual `shouldBe` expected
+          (LexicalError lineNumber) -> "LexicalError " ++ show lineNumber
+          (Lex          _         ) -> "OK"
+  it ("identifies a lexical error in " ++ pasFile) $ actual `shouldBe` expected
   where
     pasFilePath = "./test/data/pas/" ++ pasFile
     pasFile = baseName ++ ".pas"

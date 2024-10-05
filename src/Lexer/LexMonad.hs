@@ -2,7 +2,7 @@
 
 module Lexer.LexMonad ( Lex (..) ) where
 
-data Lex a = Lex !a | LexicalError Int
+data Lex a = Lex a | LexicalError Int
 
 instance Functor Lex where
   fmap :: (a -> b) -> Lex a -> Lex b

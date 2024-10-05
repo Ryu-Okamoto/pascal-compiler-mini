@@ -14,7 +14,9 @@ splitToTokens sourceCode = tokenizeForLines codeLines startLine
     codeLines = lines $ removeComments sourceCode
     startLine = 1
 
--- HACK: This implementation is redundant to evaluate restrictly.
+-- HACK: 
+--   This implementation is redundant.
+--   It is necessary to evaluate restrictly for finding errors from the top of the source code.
 tokenizeForLines :: [String] -> Int -> Lex [Token]
 tokenizeForLines []    _          = return []
 tokenizeForLines (h:t) lineNumber = do

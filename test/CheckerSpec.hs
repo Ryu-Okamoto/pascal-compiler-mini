@@ -62,7 +62,7 @@ testCase baseName expected = do
                 checkResult = Checker.run ast
         where
           parseResult = Parser.run tokens
-  it ("identifies whether a semantic error exists in " ++ tkFile) $ actual `shouldBe` expected
+  it ("identifies whether a syntax or semantic error exists in " ++ tkFile) $ actual `shouldBe` expected
   where
     tkFilePath = "./test/data/tk/" ++ tkFile 
     tkFile = baseName ++ ".tk"
