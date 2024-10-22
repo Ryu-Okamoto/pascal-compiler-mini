@@ -1,0 +1,62 @@
+Program                 ::= "program" ProgramName ";" [ Block ] CompoundStatement "."
+ProgramName             ::= Identifier
+Block                   ::= SubProgramDeclaration | VariableDeclaration [ SubProgramDeclaration ]
+VariableDeclaration     ::= "var" VariablesTyping { VariablesTyping }
+VariablesTyping         ::= VariableNames ":" Type ";"
+VariableNames           ::= VariableName { "," VariableName }
+VariableName            ::= Identifier
+Type                    ::= StandardType | ArrayType
+StandardType            ::= "integer" | "char" | "boolean"
+ArrayType               ::= "array" "[" MinimumIndex ".." MaximumIndex "]" "of" StandardType
+MinimumIndex            ::= Integer
+MaximumIndex            ::= Integer
+Integer                 ::= [ Sign ] UnsignedInteger
+Sign                    ::= "+" | "-"
+SubProgramDeclarations  ::= SubProgramDeclaration ";" { SubProgramDeclaration ";" }
+SubProgramDeclaration   ::= SubProgramHead [ VariableDeclaration ] CompoundStatement
+SubProgramHead          ::= "procedure" ProcedureName [ Parameter ] ";"
+ProcedureName           ::= Identifier
+Parameter               ::= "(" Parameters ")"
+Parameters              ::= ParametersTyping { ";" ParametersTyping }
+ParametersTyping        ::= ParameterNames ":" StandardType
+ParameterNames          ::= ParameterName { "," ParameterName }
+ParameterName           ::= Identifier
+CompoundStatement       ::= "begin" Statements "end"
+Statements              ::= Statement ";" { Statement ";" }
+Statement               ::= BasicStatement | IfStatement | WhileStatement
+BasicStatement          ::= AssignmentStatement | ProcedureCallStatement | IOStatement | CompoundStatement
+AssignmentStatement     ::= LeftPart ":=" Expression
+IfStatement             ::= "if" Expression "then" CompoundStatement [ ElseStatement ]
+ElseStatement           ::= "else" CompoundStatement
+WhileStatement          ::= "while" Expression "do" CompoundStatement
+LeftPart                ::= Variable
+Variable                ::= VariableName [ "[" Index "]" ]
+# Variable                ::= PureVariable | IndexedVariable
+# PureVariable            ::= VariableName
+# IndexedVariable         ::= VariableName "[" Index "]"
+Index                   ::= Expression
+ProcedureCallStatement  ::= ProcedureName [ "(" Expressions ")" ]
+Expressions             ::= Expression { "," Expression }
+Expression              ::= SimpleExpression [ RelationalOperation ]
+RelationalOperation     ::= RelationalOperator SimpleExpression
+SimpleExpression        ::= [ Sign ] Term { AdditionalOperation }
+AdditionalOperation     ::= AdditionalOperator Term
+Term                    ::= Factor { MultiplicativeOperation }
+MultiplicativeOperation ::= MultiplicativeOperator Factor
+Factor                  ::= Variable | Constant | "(" Expression ")" | "not" Factor
+RelationalOperator      ::= "=" | "<>" | "<" | "<=" | ">" | ">="
+AdditionalOperator    ::= "+" | "-" | "or"
+MultiplicativeOperator  ::= "*" | "/" | "div" | "mod" | "and"
+IOStatement             ::= "readln" [ "(" Variables ")" ] | "writeln" [ "(" Expressions ")" ]
+Variables               ::= Variable { "," Variable }
+Constant                ::= UnsignedInteger | String | "false" | "true"
+
+# this line is comment.
+
+# non-terminal variables handled as Token
+## UnsignedInteger      ::= Number { Number }
+## String               ::= "'" StringElement { StringElement } "'"
+## StringElement        ::= ```All characters except for " and "```
+## Identifier           ::= Alphabet { Alphabet | Number }
+## Alphabet             ::= "a" | "b" | … | "z" | "A" | "B" | … | "Z"
+## Number               ::= "0" | "1" | … | "9"                         
