@@ -1,26 +1,30 @@
+## this line is comment
+## the grammer of pascal-like language, described as EBNF
+## Variables starting with @ are treated as terminals
+
 Program                 ::= "program" ProgramName ";" [ Block ] CompoundStatement "."
-ProgramName             ::= Identifier
+ProgramName             ::= @Identifier
 Block                   ::= SubProgramDeclaration | VariableDeclaration [ SubProgramDeclaration ]
 VariableDeclaration     ::= "var" VariablesTyping { VariablesTyping }
 VariablesTyping         ::= VariableNames ":" Type ";"
 VariableNames           ::= VariableName { "," VariableName }
-VariableName            ::= Identifier
+VariableName            ::= @Identifier
 Type                    ::= StandardType | ArrayType
 StandardType            ::= "integer" | "char" | "boolean"
 ArrayType               ::= "array" "[" MinimumIndex ".." MaximumIndex "]" "of" StandardType
 MinimumIndex            ::= Integer
 MaximumIndex            ::= Integer
-Integer                 ::= [ Sign ] UnsignedInteger
+Integer                 ::= [ Sign ] @UnsigendInteger
 Sign                    ::= "+" | "-"
 SubProgramDeclarations  ::= SubProgramDeclaration ";" { SubProgramDeclaration ";" }
 SubProgramDeclaration   ::= SubProgramHead [ VariableDeclaration ] CompoundStatement
 SubProgramHead          ::= "procedure" ProcedureName [ Parameter ] ";"
-ProcedureName           ::= Identifier
+ProcedureName           ::= @Identifier
 Parameter               ::= "(" Parameters ")"
 Parameters              ::= ParametersTyping { ";" ParametersTyping }
 ParametersTyping        ::= ParameterNames ":" StandardType
 ParameterNames          ::= ParameterName { "," ParameterName }
-ParameterName           ::= Identifier
+ParameterName           ::= @Identifier
 CompoundStatement       ::= "begin" Statements "end"
 Statements              ::= Statement ";" { Statement ";" }
 Statement               ::= BasicStatement | IfStatement | WhileStatement
@@ -42,18 +46,9 @@ Term                    ::= Factor { MultiplicativeOperation }
 MultiplicativeOperation ::= MultiplicativeOperator Factor
 Factor                  ::= Variable | Constant | "(" Expression ")" | "not" Factor
 RelationalOperator      ::= "=" | "<>" | "<" | "<=" | ">" | ">="
-AdditionalOperator      ::= "+" | "-" | "or"
+AdditionalExpression    ::= "+" | "-" | "or"
 MultiplicativeOperator  ::= "*" | "/" | "div" | "mod" | "and"
 IOStatement             ::= "readln" [ "(" Variables ")" ] | "writeln" [ "(" Expressions ")" ]
 Variables               ::= Variable { "," Variable }
-Constant                ::= UnsignedInteger | String | "false" | "true"
-
-# this line is comment.
-
-# non-terminal variables handled as Token
-## UnsignedInteger      ::= Number { Number }
-## String               ::= "'" StringElement { StringElement } "'"
-## StringElement        ::= ```All characters except for " and "```
-## Identifier           ::= Alphabet { Alphabet | Number }
-## Alphabet             ::= "a" | "b" | … | "z" | "A" | "B" | … | "Z"
-## Number               ::= "0" | "1" | … | "9"                         
+Constant                ::= @UnsigendInteger | @String | "false" | "true"
+                      
