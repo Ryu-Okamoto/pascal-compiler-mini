@@ -26,6 +26,8 @@ source-repository head
 library
   exposed-modules:
       AST
+      AST.Generator
+      AST.StrictLL1
       Checker.Checker
       Checker.CheckMonad
       Lexer.Lexer
