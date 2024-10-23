@@ -17,7 +17,7 @@ METACHAR_PATTERN = r'[\|\[\]\{\}]|::='
 def validate_grammer():
 
     ## read the file written the grammer in
-    with open('grammer.txt') as f:
+    with open('grammer.ebnf') as f:
         lines = f.readlines()
     lines = remove_comment_lines(lines)
 
