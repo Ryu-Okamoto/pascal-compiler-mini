@@ -3,12 +3,14 @@
 module AST.StrictLL1 where
 
 {-
-  definition of EBNF that can express strict-LL1 grammer
+  Definition of EBNF that can express strict-LL1 grammer
   where a grammer G is strict-LL1 only if G has
     1. no body that has optional consecutive variables such as V ::= [ Va Vb ], where V, Va, Vb are variables
     2. no variable whose any body does not share first elements with others (then, G is called LL1)
-  
-  definition of EBNF expressing strict-LL1 by using EBNF
+
+  Definition of EBNF expressing strict-LL1 by using EBNF
+  For easy writing, variables starting with "@"" are treated as terminals
+    e.g. @V, @NonTerminal are terminals
   ----------------------------------------------------------------------
     EBNF     ::= EBNFL "." { EBNFL "." }
     EBNFL    ::= Head "::=" Body { "|" Body }
@@ -16,7 +18,7 @@ module AST.StrictLL1 where
     Body     ::= Element { Element }
     Element  ::= Terminal | Variable | [ Element ] | { Element }
     Variable ::= CAPS [ String ]
-    Terminal ::= \"String\"
+    Terminal ::= \"String\" | "@" Variable
     CAPS     ::= "A" | "B" | ... | "Z"
     String   ::= ASCII { ASCII }
   ----------------------------------------------------------------------
